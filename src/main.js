@@ -10,3 +10,8 @@ new Vue({
   store,
   render: h => h(App),
 }).$mount('#app');
+
+var j = 0;
+while (true) { // Noncompliant; constant end condition
+  j++;
+}
