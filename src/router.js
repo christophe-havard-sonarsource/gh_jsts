@@ -41,3 +41,31 @@ export default new Router({
     },
   ],
 });
+
+// https://rules.sonarsource.com/javascript/RSPEC-5131
+function nonCompliantCode(req, res){
+  const tainted = req.query.name;
+  res.send(tainted); // Noncompliant
+}
+
+// https://rules.sonarsource.com/javascript/RSPEC-5146
+function redirection(req, res) {
+  const url = req.query.url; // user controlled input
+
+  res.redirect(url); // Noncompliant
+}
+
+
+let arr = ["a", "b", "c"];
+let merged = arr.reduce(function(a, b) {
+  a.concat(b);
+}); // Noncompliant: No return statement, will result in TypeError
+
+
+if (!"prop" in myObj) {  // Noncompliant;  "in" operator is checking property "false"
+  doTheThing();  // this block will be never executed
+}
+
+if (!foo instanceof MyClass) {  // Noncompliant; "!foo" returns a boolean, which is not an instance of anything
+  doTheOtherThing();  // this block is never executed
+}
